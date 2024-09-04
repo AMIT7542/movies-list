@@ -1,94 +1,35 @@
 import Image from "next/image";
 import styles from "./page.module.css";
+import MovieCard from "./components/MovieCard";
+// https://api.themoviedb.org/3/movie/popular?api_key=959d944b439d7313c885cf0bb5237706
+const apiKey = "959d944b439d7313c885cf0bb5237706";
+console.log(apiKey);
 
-export default function Home() {
+const getMovies = async () => {
+  const res = await fetch(
+    `https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}`
+  );
+  const movieList = await res.json();
+  return movieList;
+};
+export default async function Home() {
+  const list = await getMovies();
+  console.log(list);
   return (
     <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
+      <h1 className={styles.h1}>Movie Database</h1>
+      <div className={styles.card}>
+        {list.results.length > 0 &&
+          list.results.map((movie: any) => (
+            <MovieCard
+              // poster_path, title, description, id
+              key={movie.id}
+              poster_path={movie.poster_path}
+              title={movie.title}
+              description={movie.overview}
+              id={movie.id}
             />
-          </a>
-        </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
+          ))}
       </div>
     </main>
   );

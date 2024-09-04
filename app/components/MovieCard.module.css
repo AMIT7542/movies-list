@@ -1,0 +1,47 @@
+.card {
+  background-color: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+.card:hover {
+  transform: translateY(-5px);
+  cursor: pointer;
+}
+.image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+.title {
+  font-family: var(--font-family-primary);
+  font-size: 1.2rem;
+  padding: 15px;
+  color: #333;
+}
+
+.description {
+  font-family: var(--font-family-primary);
+  font-size: 1rem;
+  padding: 0 15px 15px;
+  color: #666;
+  line-height: 1.5;
+}
+.backButton {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  color: #fff;
+  background-color: #0070f3;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.backButton:hover {
+  background-color: #005bb5;
+}
